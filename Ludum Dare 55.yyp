@@ -35,9 +35,10 @@
   "name":"Ludum Dare 55",
   "resources":[
     {"id":{"name":"FirstCurve","path":"animcurves/FirstCurve/FirstCurve.yy",},},
-    {"id":{"name":"oMonsterSpawner","path":"objects/oMonsterSpawner/oMonsterSpawner.yy",},},
+    {"id":{"name":"oWard","path":"objects/oWard/oWard.yy",},},
     {"id":{"name":"oFloor","path":"objects/oFloor/oFloor.yy",},},
     {"id":{"name":"oMonster","path":"objects/oMonster/oMonster.yy",},},
+    {"id":{"name":"oMonsterSpawner","path":"objects/oMonsterSpawner/oMonsterSpawner.yy",},},
     {"id":{"name":"oOperator","path":"objects/oOperator/oOperator.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oSkull","path":"objects/oSkull/oSkull.yy",},},

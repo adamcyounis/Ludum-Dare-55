@@ -4,3 +4,10 @@ global._player = 0;
 window_set_cursor(cr_cross);
 
 global._soulScale = 0.06;
+
+function gameRestart(){
+	game_restart();
+	_souls = 100;
+	_score = 0;
+	
+}
