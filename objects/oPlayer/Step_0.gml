@@ -1,4 +1,10 @@
 /// @description Insert description here
 // You can write your code in this editor
-instance_destroy(other);
-global._score ++;
+
+
+
+handleKeyInput();
+tryDash();
+tryFire();
+_e.decel();
+_e.moveAndCollide();
