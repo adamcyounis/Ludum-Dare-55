@@ -35,8 +35,9 @@
   "name":"Ludum Dare 55",
   "resources":[
     {"id":{"name":"FirstCurve","path":"animcurves/FirstCurve/FirstCurve.yy",},},
-    {"id":{"name":"oMonster","path":"objects/oMonster/oMonster.yy",},},
     {"id":{"name":"oFloor","path":"objects/oFloor/oFloor.yy",},},
+    {"id":{"name":"oMonster","path":"objects/oMonster/oMonster.yy",},},
+    {"id":{"name":"oOperator","path":"objects/oOperator/oOperator.yy",},},
     {"id":{"name":"oPlayer","path":"objects/oPlayer/oPlayer.yy",},},
     {"id":{"name":"oSkull","path":"objects/oSkull/oSkull.yy",},},
     {"id":{"name":"oSolid","path":"objects/oSolid/oSolid.yy",},},
@@ -55,6 +56,7 @@
     {"id":{"name":"enemySprite","path":"sprites/enemySprite/enemySprite.yy",},},
     {"id":{"name":"pixel","path":"sprites/pixel/pixel.yy",},},
     {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},},
+    {"id":{"name":"crosshair","path":"sprites/crosshair/crosshair.yy",},},
     {"id":{"name":"Sprite2","path":"sprites/Sprite2/Sprite2.yy",},},
     {"id":{"name":"Sprite3","path":"sprites/Sprite3/Sprite3.yy",},},
     {"id":{"name":"Sprite5","path":"sprites/Sprite5/Sprite5.yy",},},

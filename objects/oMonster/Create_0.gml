@@ -127,7 +127,6 @@ function pickDirection(){
 	if(isLoyal()){
 		_predatorResult = getPredator(50 + hw);
 		_preyResult = getPrey(1000 + hw);
-		
 	}
 	
 

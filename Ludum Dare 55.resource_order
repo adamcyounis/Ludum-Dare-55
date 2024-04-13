@@ -17,8 +17,9 @@
     {"name":"Timelines","order":8,"path":"folders/Timelines.yy",},
   ],
   "ResourceOrderSettings":[
-    {"name":"oMonster","order":8,"path":"objects/oMonster/oMonster.yy",},
     {"name":"oFloor","order":2,"path":"objects/oFloor/oFloor.yy",},
+    {"name":"oMonster","order":8,"path":"objects/oMonster/oMonster.yy",},
+    {"name":"oOperator","order":12,"path":"objects/oOperator/oOperator.yy",},
     {"name":"oSkull","order":10,"path":"objects/oSkull/oSkull.yy",},
     {"name":"oSolid","order":3,"path":"objects/oSolid/oSolid.yy",},
     {"name":"oSoul","order":4,"path":"objects/oSoul/oSoul.yy",},
@@ -33,6 +34,7 @@
     {"name":"Background","order":4,"path":"sprites/Background/Background.yy",},
     {"name":"enemySprite","order":5,"path":"sprites/enemySprite/enemySprite.yy",},
     {"name":"pixel","order":2,"path":"sprites/pixel/pixel.yy",},
+    {"name":"crosshair","order":7,"path":"sprites/crosshair/crosshair.yy",},
     {"name":"Sprite2","order":1,"path":"sprites/Sprite2/Sprite2.yy",},
     {"name":"Sprite3","order":16,"path":"sprites/Sprite3/Sprite3.yy",},
     {"name":"Sprite5","order":3,"path":"sprites/Sprite5/Sprite5.yy",},
