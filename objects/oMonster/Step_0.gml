@@ -8,6 +8,7 @@ pickColour();
 
 _e.decel();
 _e.moveAndCollide();
+moveAwayFromWall();
 clampPosition();
 
 

@@ -128,7 +128,7 @@ function trySummon(){
 
 
 function clampPosition(){
-	var _boundary = 16;
+	var _boundary = 32;
 	var _minx = _boundary +sprite_width/2;
 	var _maxx = room_width- sprite_width/2 - _boundary;
 	var _miny = _boundary + sprite_height/2;

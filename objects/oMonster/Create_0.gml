@@ -117,7 +117,7 @@ function getPlayer(_vision){
 
 
 function pickDirection(){
-	var _moveSpeed = _baseMoveSpeed  - (_souls*0.2);
+	var _moveSpeed = _baseMoveSpeed  - (_souls*0.3);
 	_moveSpeed = clamp(_moveSpeed,1,20);
 	
 	var hw = sprite_width/2;	
@@ -154,8 +154,10 @@ function pickDirection(){
 	}
 
 	if(_dir != vec(0,0)){
-		_e._vel = mult(_dir, _moveSpeed);
+		_e._vel = add(_e._vel, mult(_dir, _moveSpeed/10));
 	}
+	
+	
 }
 
 
@@ -200,7 +202,7 @@ function die(){
 
 
 function clampPosition(){
-	var _boundary = 16;
+	var _boundary = 32;
 	var _minx = _boundary +sprite_width/2;
 	var _maxx = room_width- sprite_width/2 - _boundary;
 	var _miny = _boundary + sprite_height/2;
@@ -208,3 +210,44 @@ function clampPosition(){
 	x = clamp(x, _minx , _maxx);
 	y = clamp(y, _miny, _maxy);
 }
+
+
+
+//adds velocity away from the room edges
+//move with more force the closer to the edge
+function moveAwayFromWall(){
+
+	var _boundary = 92;
+	var _minx = _boundary + sprite_width/2;
+	var _maxx = room_width - sprite_width/2 - _boundary;
+	var _miny = _boundary + sprite_height/2;
+	var _maxy =  room_height- sprite_height/2 - _boundary;
+
+	var _dir = vec(0,0);
+	var _factor = 10;
+	if(x < _minx){
+		var _dist = _minx - x;
+		_e._vel = add(_e._vel, vec(_dist/_factor ,0));
+	}
+	
+	if(x > _maxx){
+		var _dist = x - _maxx;
+		_e._vel = add(_e._vel, vec(-_dist/_factor ,0));
+	}
+
+	if(y < _miny){
+		var _dist = _miny - y;
+		_e._vel = add(_e._vel, vec(0, _dist/_factor));
+	}
+
+	if(y > _maxy){
+		var _dist = y - _maxy;
+		_e._vel = add(_e._vel, vec(0, -_dist/_factor));
+	}
+
+}
+
+
+
+
+
