@@ -1,6 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 _speed = 15;
+_base_speed = 15;
 _max_speed = 14;
 _dash_time = 0;
 _dash_direction = {x:0, y:0};
@@ -17,8 +18,14 @@ global._player = self;
 
 _e = new Entity(self, 0.6);
 
+_summoning = noone;
+_releasedSummon = true;
+_timeAtSummonStart = 0;
+_soulsPerMilli = 0.01;
 
 function handleKeyInput(){
+	
+	_speed = (_summoning == noone)? _base_speed: _base_speed*0.5;
 	var _left = keyboard_check(ord("A"));
 	var _right =keyboard_check(ord("D"));
 	var _up = keyboard_check(ord("W"));
@@ -45,17 +52,19 @@ function handleKeyInput(){
 }
 
 function tryDash(){
-	if(keyboard_check_pressed(vk_space) ||keyboard_check_pressed(vk_lshift)){
-		_dash_time = current_time;
-		_dash_direction = normalize(_e._vel);
-	}
+	if(_summoning == noone){
+		if(keyboard_check_pressed(vk_space) ||keyboard_check_pressed(vk_lshift)){
+			_dash_time = current_time;
+			_dash_direction = normalize(_e._vel);
+		}
 		
-	if(_dash_time > 0){
-		var _ac_struct = animcurve_get_channel(_my_curve,"_dk");
-		var _t =( current_time-_dash_time) / 1000;
-		var _amount = animcurve_channel_evaluate( _ac_struct,_t/_dash_duration)*_dash_speed;
+		if(_dash_time > 0){
+			var _ac_struct = animcurve_get_channel(_my_curve,"_dk");
+			var _t =( current_time-_dash_time) / 1000;
+			var _amount = animcurve_channel_evaluate( _ac_struct,_t/_dash_duration)*_dash_speed;
 	
-		_e._vel = add(_e._vel, mult(_dash_direction, _amount));
+			_e._vel = add(_e._vel, mult(_dash_direction, _amount));
+		}
 	}
 }
 
@@ -85,3 +94,45 @@ function tryFire(){
 	}
 }
 
+function trySummon(){
+	var _cost = (current_time - _timeAtSummonStart) * _soulsPerMilli;
+	var holding = mouse_check_button(mb_right);
+	if(_releasedSummon == false && !holding){
+		_releasedSummon = true;
+	}
+	
+	if(_summoning == noone){
+
+		if(holding && _releasedSummon){
+			//start spawning new summoningSign
+			var _spawnDistance = 64;
+			var _dir = get_direction( vec(x,y),vec(mouse_x, mouse_y));
+			var _spawnPos = vec(x + _dir.x * _spawnDistance,y + _dir.y * _spawnDistance); 
+			_summoning = instance_create_layer(_spawnPos.x, _spawnPos.y, "Instances", oSummonSign);
+			_releasedSummon = false;
+			_timeAtSummonStart = current_time;
+		}
+	} else {
+		if(holding && global._souls >_cost){
+			_summoning._souls = _cost;
+		}else{
+			//release summoning sign
+			global._souls -= _summoning._souls;
+			_summoning.release();	
+			_summoning = noone;
+	
+		}
+	}
+	
+}
+
+
+function clampPosition(){
+	var _boundary = 16;
+	var _minx = _boundary +sprite_width/2;
+	var _maxx = room_width- sprite_width/2 - _boundary;
+	var _miny = _boundary + sprite_height/2;
+	var _maxy =  room_height- sprite_height/2 - _boundary;
+	x = clamp(x, _minx , _maxx);
+	y = clamp(y, _miny, _maxy);
+}

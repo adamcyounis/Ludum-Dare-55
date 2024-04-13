@@ -15,6 +15,16 @@ enum target{
 
 _myTarget = target.PLAYER;
 
+_timeAtSummoned = 0;
+_loyaltyPeriod = 5000;
+
+_skull = instance_create_depth(x, y, 2, oSkull);
+_skull._monster = self;
+
+function isLoyal(){
+	return _timeAtSummoned != 0 && (current_time - _timeAtSummoned) < _loyaltyPeriod;
+}
+
 function grow(amount){
 	_souls++;	
 }
@@ -41,7 +51,7 @@ function getPrey(_vision){
 	var _biggestPrey = noone;
 	var found = false
 	var _me = self;
-	with (oEnemy){
+	with (oMonster){
 	
 		var notMe = id != other.id;
 		if(notMe){		
@@ -70,12 +80,11 @@ function getPrey(_vision){
 
 function getPredator(_vision){	
 	
-
 	var _result = {_found: false, _pos: vec(0,0)};
 	var found = false;
 	//get the nearest predator
 	var _biggest = _me;
-	with (oEnemy){
+	with (oMonster){
 		
 		if(point_distance(self.x, self.y, other.x, other.y) < _vision){
 		
@@ -96,12 +105,13 @@ function getPredator(_vision){
 
 function getPlayer(_vision){
 	var _result = {_found: false, _pos: vec(0,0)};
-	var _playerPos = vec(global._player.x, global._player.y);
 	
-	if(distance(vec(x,y), _playerPos)< _vision){
-		_result = {_found: true, _pos: _playerPos};
+	if(!isLoyal()){
+		var _playerPos = vec(global._player.x, global._player.y);	
+		if(distance(vec(x,y), _playerPos)< _vision){
+			_result = {_found: true, _pos: _playerPos};
+		}
 	}
-	
 	return _result;
 }
 
@@ -110,10 +120,19 @@ function pickDirection(){
 	var _moveSpeed = _baseMoveSpeed  - (_souls*0.2);
 	_moveSpeed = clamp(_moveSpeed,1,20);
 	
-	var _predatorResult = getPredator(150);
-	var _preyResult = getPrey(200);
-	var _playerResult = getPlayer(300);
-	var _soulResult = getSoul(600);
+	var hw = sprite_width/2;	
+	var _predatorResult = getPredator(150 + hw);
+	var _preyResult = getPrey(200 + hw);
+	
+	if(isLoyal()){
+		_predatorResult = getPredator(50 + hw);
+		_preyResult = getPrey(1000 + hw);
+		
+	}
+	
+
+	var _playerResult = getPlayer(300 + hw);
+	var _soulResult = getSoul(600 + hw);
 	
 	var _dir = vec(0,0);
 
@@ -163,6 +182,30 @@ function pickColour(){
 	}
 }
 
+function scale(){
+	image_xscale = _souls *global._soulScale;
+	image_yscale = _souls *global._soulScale;
+}
+
+scale();
+
+function summon(_value){
+	_souls = _value;
+	_timeAtSummoned = current_time;
+}
+
+function die(){
+	_skull.drop();
+	instance_destroy();
+}
 
 
-
+function clampPosition(){
+	var _boundary = 16;
+	var _minx = _boundary +sprite_width/2;
+	var _maxx = room_width- sprite_width/2 - _boundary;
+	var _miny = _boundary + sprite_height/2;
+	var _maxy =  room_height- sprite_height/2 - _boundary;
+	x = clamp(x, _minx , _maxx);
+	y = clamp(y, _miny, _maxy);
+}

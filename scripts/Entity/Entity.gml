@@ -6,7 +6,8 @@ function Entity(body, decay) constructor{
 	_decay = decay;
 	moveAndCollide = function(){
 		var _v = _vel;
-		with(_body){
+		with(_body){			
+			
 			var _collisions = move_and_collide(_v.x *delta_time/global._dtm, _v.y*delta_time/global._dtm, oSolid);
 			for(var i = 0; i < array_length(_collisions); i++){
 				var _collision = _collisions[i];
@@ -23,8 +24,8 @@ function Entity(body, decay) constructor{
 	}
 	
 	
-	
 	decel = function (){
 		_vel = mult(_vel, _decay);
 	}
+	
 }
