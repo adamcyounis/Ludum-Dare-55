@@ -30,10 +30,20 @@ function get_length(_v){
 }
 
 //component based multiplication
-function mult(_v, _x){
-    return {x: _v.x * _x, y: _v.y * _x};
+function mult(_v, _f){
+    return {x: _v.x * _f, y: _v.y * _f};
 }
 
 function add(_v, _v2){
     return {x: _v.x + _v2.x, y: _v.y + _v2.y};
+}
+
+
+function get_direction(_v1, _v2){
+	var v = {x: _v1.x - _v2.x, y: _v1.y - _v2.y}
+	v = normalize(v);
+	 return v;
+}
+function vec(_x, _y){
+	return { x: _x, y:_y};
 }
