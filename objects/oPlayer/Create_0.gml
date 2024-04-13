@@ -79,7 +79,7 @@ function tryFire(){
 		global._souls --;
 
 		var _soul = instance_create_layer(x, y, "Instances", oSoul);
-		var _dir = get_direction(vec(mouse_x, mouse_y), vec(x,y));
+		var _dir = get_direction( vec(x,y),vec(mouse_x, mouse_y));
 		_soul._e._vel = mult(_dir, _soulSpeed);
 	
 	}
