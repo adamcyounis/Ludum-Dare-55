@@ -11,3 +11,8 @@ function gameRestart(){
 	_score = 0;
 	
 }
+
+function getPlayerPos(){
+
+	return vec(global._player.x, global._player.y);
+}

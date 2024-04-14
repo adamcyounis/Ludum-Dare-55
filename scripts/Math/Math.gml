@@ -19,7 +19,10 @@ function normalize(_v){
 }
 
 function distance(_to, _from){
-	return get_length(vec(abs(_from.x - _to.x), abs(_from.y - _to.y)));
+	var _absx = abs(_from.x - _to.x);
+	var _absy = abs(_from.y - _to.y);
+	var _vec = vec(_absx,_absy );
+	return get_length(_vec);
 }
 
 function get_length(_v){
@@ -61,4 +64,17 @@ function get_direction(_from, _to){
 
 function vec(_x, _y){
 	return { x: _x, y:_y};
+}
+
+function segment_intersect(_p1, _p2, _p3, _p4){
+	
+	var _denom = (_p4.y - _p3.y) * (_p2.x - _p1.x) - (_p4.x - _p3.x) * (_p2.y - _p1.y);
+	var _num_a = (_p4.x - _p3.x) * (_p1.y - _p3.y) - (_p4.y - _p3.y) * (_p1.x - _p3.x);
+	var _num_b = (_p2.x - _p1.x) * (_p1.y - _p3.y) - (_p2.y - _p1.y) * (_p1.x - _p3.x);
+	var _ua = _num_a / _denom;
+	var _ub = _num_b / _denom;
+	if(_ua >= 0 && _ua <= 1 && _ub >= 0 && _ub <= 1){
+		return true;
+	}
+	return false;
 }

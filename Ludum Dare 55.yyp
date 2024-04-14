@@ -35,7 +35,7 @@
   "name":"Ludum Dare 55",
   "resources":[
     {"id":{"name":"FirstCurve","path":"animcurves/FirstCurve/FirstCurve.yy",},},
-    {"id":{"name":"oWard","path":"objects/oWard/oWard.yy",},},
+    {"id":{"name":"oCandle","path":"objects/oCandle/oCandle.yy",},},
     {"id":{"name":"oFloor","path":"objects/oFloor/oFloor.yy",},},
     {"id":{"name":"oMonster","path":"objects/oMonster/oMonster.yy",},},
     {"id":{"name":"oMonsterSpawner","path":"objects/oMonsterSpawner/oMonsterSpawner.yy",},},
@@ -48,7 +48,9 @@
     {"id":{"name":"oSummonSign","path":"objects/oSummonSign/oSummonSign.yy",},},
     {"id":{"name":"oUI","path":"objects/oUI/oUI.yy",},},
     {"id":{"name":"oWall","path":"objects/oWall/oWall.yy",},},
+    {"id":{"name":"oWard","path":"objects/oWard/oWard.yy",},},
     {"id":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"id":{"name":"Room3","path":"rooms/Room3/Room3.yy",},},
     {"id":{"name":"Entity","path":"scripts/Entity/Entity.yy",},},
     {"id":{"name":"game_manager","path":"scripts/game_manager/game_manager.yy",},},
     {"id":{"name":"Math","path":"scripts/Math/Math.yy",},},
@@ -58,6 +60,7 @@
     {"id":{"name":"crosshair","path":"sprites/crosshair/crosshair.yy",},},
     {"id":{"name":"enemySprite","path":"sprites/enemySprite/enemySprite.yy",},},
     {"id":{"name":"pixel","path":"sprites/pixel/pixel.yy",},},
+    {"id":{"name":"sCandle","path":"sprites/sCandle/sCandle.yy",},},
     {"id":{"name":"Sprite1","path":"sprites/Sprite1/Sprite1.yy",},},
     {"id":{"name":"Sprite2","path":"sprites/Sprite2/Sprite2.yy",},},
     {"id":{"name":"Sprite3","path":"sprites/Sprite3/Sprite3.yy",},},
@@ -69,6 +72,7 @@
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
     {"roomId":{"name":"Room2","path":"rooms/Room2/Room2.yy",},},
+    {"roomId":{"name":"Room3","path":"rooms/Room3/Room3.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

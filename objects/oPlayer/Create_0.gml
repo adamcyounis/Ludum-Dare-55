@@ -4,10 +4,10 @@ _speed = 15;
 _base_speed = 15;
 _max_speed = 14;
 _dash_time = 0;
-_dash_direction = {x:0, y:0};
+_dash_direction = vec(0,0);
 _dash_speed = 120;
 _dash_duration = 0.11;
-_move = {x:0, y:0};
+_move = vec(0,0);
 
 _time_at_fire = 0;
 _soulSpeed = 60;
@@ -53,7 +53,7 @@ function handleKeyInput(){
 
 function tryDash(){
 	if(_summoning == noone){
-		if(keyboard_check_pressed(vk_space) ||keyboard_check_pressed(vk_lshift)){
+		if(keyboard_check_pressed(vk_space)){
 			_dash_time = current_time;
 			_dash_direction = normalize(_e._vel);
 		}

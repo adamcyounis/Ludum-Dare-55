@@ -13,10 +13,11 @@ function spawnMonster(){
 	
 	var valid = false;
 	var _spawnVec = vec(0,0);
+
 	while(!valid){
 		_spawnVec.x = random_range(_threshold, room_width - _threshold);
 		_spawnVec.y = random_range(_threshold , room_height - _threshold);
-		if(distance(_spawnVec, vec(global._player.x, global._player.y) > 300)){
+		if(distance(_spawnVec, vec(global._player.x, global._player.y)) > 300){
 			valid = true;
 		}
 	}
