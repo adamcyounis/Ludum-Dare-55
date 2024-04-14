@@ -10,5 +10,10 @@ _e.moveAndCollide();
 moveAwayFromWall();
 clampPosition();
 
+
 _skull.x = x;
 _skull.y = y;
+//flip skull sprite if monster is facing left
+_skull.image_xscale = _e._vel.x >=0 ? -1 : 1;
+
+updateParticles();

@@ -7,6 +7,10 @@ global._soulScale = 0.06;
 
 function gameRestart(){
 
+	with (oMonster){
+	    part_system_destroy(_ps);
+	}
+	
 	game_restart();
 	global._souls = 50;
 	global._score = 0;

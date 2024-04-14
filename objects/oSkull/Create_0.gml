@@ -5,4 +5,5 @@ _souls = 0;
 function drop(){
 	_souls = _monster._souls;
 	_monster = noone;
+	sprite_index = sDeadSkull;
 }

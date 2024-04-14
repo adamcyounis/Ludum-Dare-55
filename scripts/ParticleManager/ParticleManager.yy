@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ParticleManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ParticleManager",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

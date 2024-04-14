@@ -165,22 +165,24 @@ function pickColour(){
 	switch(_myTarget){
 		
 		case target.PLAYER:
-			image_blend = c_red;
+			image_blend = #c43a79;//c_red;
 		break;
 	
 		case target.PREY:
-			image_blend = c_blue;
+			image_blend = #4f62e4;//c_blue;
 		break;
 	
 		case target.PREDATOR:
-			image_blend = c_white;
+			image_blend = #ebb677;// c_white;
 		break;
 		
 		case target.SOUL:
-			image_blend = c_green;
+			image_blend = #4be89a;//c_green;
 		break;
 	
 	}
+	//set image alpha to 0
+	image_alpha = 0;
 }
 
 function scale(){
@@ -198,6 +200,11 @@ function summon(_value){
 function die(){
 	_skull.drop();
 	instance_destroy();
+	//destroy particle system
+	
+	part_emitter_destroy(_ps, _pemit1);
+	part_system_destroy(_ps);
+
 }
 
 
@@ -247,7 +254,44 @@ function moveAwayFromWall(){
 
 }
 
+_ps = part_system_create();
+_ptype1 = part_type_create();
+_pemit1 = part_emitter_create(_ps);
+function setupParticles(){
+	
+	part_system_layer(_ps, "Particles");
+	//pMonsterBody
+	part_system_draw_order(_ps, false);
+	part_system_global_space(_ps, false);
+	//Emitter
 
+	part_type_shape(_ptype1, pt_shape_disk);
+	part_type_size(_ptype1, 1, 1, -0.01, -0.01);
+	part_type_scale(_ptype1, 0.5, 0.5);
+	part_type_speed(_ptype1, 0.7, 1, -0.01, 0);
+	part_type_direction(_ptype1, 0, 360, 0, 0);
+	part_type_gravity(_ptype1, 0, 271);
+	part_type_orientation(_ptype1, 0, 0, 0, 0, false);
+	part_type_colour3(_ptype1, $FFFFFF, $FFFFFF, $FFFFFF);
+	part_type_alpha3(_ptype1, 1, 1, 1);
+	part_type_blend(_ptype1, false);
+	part_type_life(_ptype1, 80, 80);
 
+	part_emitter_region(_ps, _pemit1, -64, 64, -64, 64, ps_shape_ellipse, ps_distr_gaussian);
+	part_emitter_stream(_ps, _pemit1, _ptype1, 2);
+	part_system_position(_ps,x, y);
+}
 
+function updateParticles(){
+	var _inset = 0.75;
+	var _hsw = (sprite_width/2) *_inset;
+	var _hsh = (sprite_height/2)*_inset;
+	//set the particle colour to be the same as the monster
+	part_type_colour1(_ptype1, image_blend);
+	part_emitter_region(_ps, _pemit1,  -_hsw,_hsw, -_hsh, _hsh, ps_shape_ellipse, ps_distr_gaussian);
+	part_emitter_stream(_ps, _pemit1, _ptype1, 2);
+	part_system_position(_ps,x, y);
+}
+
+setupParticles();
 

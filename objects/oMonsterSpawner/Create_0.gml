@@ -6,6 +6,7 @@ _timeAtLastSpawn = 0;
 _spawnFrequency = 10000;
 _threshold = 64;
 
+
 function spawnMonster(){
 	
 	_timeAtLastSpawn = current_time;
