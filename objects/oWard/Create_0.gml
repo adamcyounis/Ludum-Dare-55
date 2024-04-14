@@ -1,12 +1,12 @@
 //creates an edge chain of points set by the player with setPoint
 // when the player finishes the ward, the ward is created and the points are deleted
 // any monsters within the ward will die
-_endRange = 32;
+_endRange = 48;
 _wardPoints = ds_list_create();
 _lineWidth = 2;
 _finished = false;
 _finishTime = 0;
-_costPerPixel = 0.1;
+_costPerPixel = 0.15;
 function startWard(){
     _finished = false;
     _wardPoints = ds_list_create();

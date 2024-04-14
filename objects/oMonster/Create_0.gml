@@ -3,8 +3,10 @@
 _souls = random_range(10,30);
 _baseMoveSpeed = 30;
 _me = self;
-
+_loyalty = 0;
+_loyal = false;
 _e = new Entity(self, 0.9);
+
 
 enum target{
 	PREY,
@@ -15,14 +17,13 @@ enum target{
 
 _myTarget = target.PLAYER;
 
-_timeAtSummoned = 0;
-_loyaltyPeriod = 5000;
+
 
 _skull = instance_create_depth(x, y, 2, oSkull);
 _skull._monster = self;
 
 function isLoyal(){
-	return _timeAtSummoned != 0 && (current_time - _timeAtSummoned) < _loyaltyPeriod;
+	return  _loyal;
 }
 
 function grow(amount){
@@ -165,7 +166,7 @@ function pickColour(){
 	switch(_myTarget){
 		
 		case target.PLAYER:
-			image_blend = #c43a79;//c_red;
+			image_blend = global._red;//c_red;
 		break;
 	
 		case target.PREY:
@@ -177,12 +178,12 @@ function pickColour(){
 		break;
 		
 		case target.SOUL:
-			image_blend = #4be89a;//c_green;
+			image_blend = global._green;//c_green;
 		break;
 	
 	}
 	//set image alpha to 0
-	image_alpha = 0;
+	image_alpha = 1;
 }
 
 function scale(){
@@ -194,7 +195,8 @@ scale();
 
 function summon(_value){
 	_souls = _value;
-	_timeAtSummoned = current_time;
+	_loyalty = _value * 10;
+	_loyal = true;
 }
 
 function die(){
@@ -283,14 +285,18 @@ function setupParticles(){
 }
 
 function updateParticles(){
+
+	var _scaleFactor = (_souls/35);
 	var _inset = 0.75;
 	var _hsw = (sprite_width/2) *_inset;
 	var _hsh = (sprite_height/2)*_inset;
 	//set the particle colour to be the same as the monster
 	part_type_colour1(_ptype1, image_blend);
 	part_emitter_region(_ps, _pemit1,  -_hsw,_hsw, -_hsh, _hsh, ps_shape_ellipse, ps_distr_gaussian);
-	part_emitter_stream(_ps, _pemit1, _ptype1, 2);
+	part_emitter_stream(_ps, _pemit1, _ptype1, 2*(_souls/10));
 	part_system_position(_ps,x, y);
+	part_type_scale(_ptype1,  _scaleFactor,  _scaleFactor);
+
 }
 
 setupParticles();

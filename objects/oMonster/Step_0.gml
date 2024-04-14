@@ -13,7 +13,17 @@ clampPosition();
 
 _skull.x = x;
 _skull.y = y;
-//flip skull sprite if monster is facing left
 _skull.image_xscale = _e._vel.x >=0 ? -1 : 1;
 
 updateParticles();
+
+if(_loyal){
+    if(_loyalty == 0){
+        _loyal = false;
+    }
+	_loyalty --;
+}else{
+    if(_loyalty > _souls*10){
+        _loyal = true;
+    }
+}

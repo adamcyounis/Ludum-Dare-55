@@ -11,3 +11,4 @@ if(_e._vel.x <= 0){
     draw_sprite_ext(leftHand, 0, x - 20, y + 20 + sin(_t) * 2, -1, 1, 0, c_white, 1);
     draw_sprite_ext(rightHand, 0, x + 40, y + 10 + sin(_t) * 2, -1, 1, 0, c_white, 1);
 }
+//draw_self();

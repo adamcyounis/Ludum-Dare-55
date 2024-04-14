@@ -15,13 +15,18 @@ _rof = 100;
 
 global._player = self;
 
-
 _e = new Entity(self, 0.6);
 
+
+//summoning variable
 _summoning = noone;
 _releasedSummon = true;
 _timeAtSummonStart = 0;
 _soulsPerMilli = 0.01;
+
+//invulnerability variables
+_lastHurtTime = 0;
+_invulnDuration = 3000;
 
 function handleKeyInput(){
 	
@@ -80,7 +85,7 @@ function clampSpeed(){
 
 function tryFire(){	
 	var _pressingMouse = mouse_check_button(mb_left)
-	var _hasSoul = global._souls > 0;
+	var _hasSoul = global._souls > 1;
 	var _onCooldown = current_time - _time_at_fire < _rof;
 	
 	if(_pressingMouse && _hasSoul && !_onCooldown){
@@ -90,7 +95,7 @@ function tryFire(){
 		var _soul = instance_create_layer(x, y, "Instances", oSoul);
 		var _dir = get_direction( vec(x,y),vec(mouse_x, mouse_y));
 		_soul._e._vel = mult(_dir, _soulSpeed);
-	
+		_soul.sprite_index = sSoulPlayer;
 	}
 }
 
@@ -111,9 +116,10 @@ function trySummon(){
 			_summoning = instance_create_layer(_spawnPos.x, _spawnPos.y, "Instances", oSummonSign);
 			_releasedSummon = false;
 			_timeAtSummonStart = current_time;
+			
 		}
 	} else {
-		if(holding && global._souls >_cost){
+		if(holding && global._souls >_cost + 1){
 			_summoning._souls = _cost;
 		}else{
 			//release summoning sign
@@ -135,4 +141,10 @@ function clampPosition(){
 	var _maxy =  room_height- sprite_height/2 - _boundary;
 	x = clamp(x, _minx , _maxx);
 	y = clamp(y, _miny, _maxy);
+}
+
+function bump(_bumperPos){
+	var _dir = get_direction(_bumperPos, vec(x,y));
+	var _bumpSpeed = 300;
+	_e._vel = add(_e._vel, mult(_dir, _bumpSpeed));	
 }
