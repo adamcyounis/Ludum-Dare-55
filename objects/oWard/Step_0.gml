@@ -1,19 +1,38 @@
 /// @description Insert description here
-// You can write your code in this editor
+// You can write your code in this edito
 
-if(keyboard_check_pressed(vk_lshift)){
+show_debug_message("updating ward");
+
+if(keyboard_check_pressed(vk_shift)){
+    show_debug_message("shift pressed");
+    if(_finished){
+        clearWard();
+    }
 
         //if player position is near the first point, finish the ward
     if(ds_list_size(_wardPoints) >= 3){
-       if( checkFinishWard()){
-        return;
-       }
+      if(calculateCost(getPlayerPos()) < global._souls){
+           if(checkFinishWard()){
+             return;
+            }
+        }
     }
 
-    setPoint(getPlayerPos());
 
+    var _cost = calculateCost(getPlayerPos());
+    //if the global souls count is greater than the calculateCost();
+    if(global._souls >= _cost){
+        show_debug_message("ward point added");
+        //if the ward is not finished, add a point to the ward
+        setPoint(getPlayerPos());
+        global._souls -=  _cost;
+    }
 }
 
+
+if(_finished && current_time - _finishTime > 3000){
+    clearWard();
+}
 
 //checkFinishWard();
 

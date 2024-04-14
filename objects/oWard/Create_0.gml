@@ -5,27 +5,29 @@ _endRange = 32;
 _wardPoints = ds_list_create();
 _lineWidth = 2;
 _finished = false;
-
+_finishTime = 0;
+_costPerPixel = 0.1;
 function startWard(){
     _finished = false;
     _wardPoints = ds_list_create();
 }
 
-
 function setPoint(_point){
-	var _candle = instance_create_depth(_point.x, _point.y, 0, oCandle);
+	var _candle = instance_create_depth(_point.x, _point.y, 1, oCandle);
     ds_list_add(_wardPoints, _candle);
 }
 
 function finishWard(){
 	//delete all monsters inside the ward
     for(var i = 0; i < instance_number(oMonster); i++){
-        var _monster = instance_find(oMonster, i);
-        if(point_in_ward(vec(_monster.x, _monster.y))){
-            _monster.die();
+        with (oMonster){
+            if(other.point_in_ward(vec(x,y))){
+                 die();
+            }
         }
     }
     _finished = true;
+    _finishTime = current_time;
    // clearWard();
 }
 
@@ -65,6 +67,10 @@ function clearWard(){
     }
     ds_list_destroy(_wardPoints);
     _wardPoints = ds_list_create();
+
+    _finished = false;
+    _finishTime = 0;
+   
 }
 
 function checkFinishWard(){
@@ -87,6 +93,18 @@ function setupDebugWard(){
 	setPoint(vec(100,100));
 	setPoint(vec(10,100));
     show_debug_message(ds_list_size(_wardPoints));
+}
+
+function calculateCost(_pos){
+
+    if(ds_list_size(_wardPoints) == 0){
+        return 0;
+    }
+    //cost is equal to the distance from the player to the last point
+    var _lastPoint = _wardPoints[| ds_list_size(_wardPoints) - 1];
+    show_debug_message(_lastPoint.y);
+    var _dist = point_distance(_pos.x, _pos.y, _lastPoint.x, _lastPoint.y);
+    return _dist * _costPerPixel;
 }
 
 //setupDebugWard();

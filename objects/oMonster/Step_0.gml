@@ -3,14 +3,12 @@
 
 scale();
 pickDirection();
-
 pickColour();
 
 _e.decel();
 _e.moveAndCollide();
 moveAwayFromWall();
 clampPosition();
-
 
 _skull.x = x;
 _skull.y = y;
