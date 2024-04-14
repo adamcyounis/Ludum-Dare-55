@@ -135,7 +135,7 @@ function pickDirection(){
 	var _soulResult = getSoul(600 + hw);
 	
 	var _dir = vec(0,0);
-
+	var _prevTarget = _myTarget;
 	if(_predatorResult._found){
 	//move away from predator
 		_dir = get_direction(_predatorResult._pos, vec(x,y));
@@ -148,6 +148,9 @@ function pickDirection(){
 	}else if(_playerResult._found){
 		_dir = get_direction(vec(x,y), _playerResult._pos);
 		_myTarget = target.PLAYER;
+		if(_prevTarget != _myTarget){
+			audio_play_sound(choose(Monster_1, Monster_2, Monster_3, Monster_4, Monster_5), 0, false);
+		}
 		
 	}else if(_soulResult._found){
 		_dir = get_direction(vec(x,y), _soulResult._pos);
@@ -206,6 +209,11 @@ function die(){
 	
 	part_emitter_destroy(_ps, _pemit1);
 	part_system_destroy(_ps);
+	
+	//play any of the death sounds
+
+	var _sound = choose(Monster_7, Monster_8, Monster_9);
+	audio_play_sound(_sound, 1, false);
 
 }
 

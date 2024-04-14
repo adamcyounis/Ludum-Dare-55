@@ -5,7 +5,6 @@
 //if the time since dead is greater than 10 seconds, start flashing faster and faster.
 //on the 15th second, destroy the skull
 
-
 var _timeSinceDead = current_time - _timeAtDead;
 if(_monster == noone){
     if(_timeSinceDead > 10000){
@@ -15,7 +14,8 @@ if(_monster == noone){
         image_alpha = _timeSinceDead mod 20 > 10? 0:1;
     }
 }else{
-	draw_text(x, y+40, string(round(_monster._souls)));
+	draw_set_font(MetalSmall);
+	//draw_text(x, y+40, string(round(_monster._souls)));
 }
 
 //draw text above head showing time since dead

@@ -10,4 +10,5 @@ trySummon();
 _e.decel();
 _e.moveAndCollide();
 clampPosition();
-	
+storeGhostPosition();
+flashSprite();

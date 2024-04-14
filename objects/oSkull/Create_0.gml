@@ -9,4 +9,5 @@ function drop(){
 	_monster = noone;
 	sprite_index = sDeadSkull;
 	_timeAtDead = current_time;
+
 }

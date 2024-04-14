@@ -12,4 +12,7 @@ if(other._invulnDuration == 0 || current_time - other._lastHurtTime > other._inv
     }
     other.bump(vec(x, y));	
     other._lastHurtTime = current_time;
+    //play player hurt sounds
+    audio_play_sound(choose(Hurt_1, Hurt_2, Hurt_3), 10, false);
+
 }

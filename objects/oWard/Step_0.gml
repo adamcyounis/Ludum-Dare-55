@@ -1,32 +1,46 @@
 /// @description Insert description here
 // You can write your code in this edito
 
-show_debug_message("updating ward");
-
-if(keyboard_check_pressed(vk_shift)){
-    show_debug_message("shift pressed");
-    if(_finished){
-        clearWard();
+if(keyboard_check_direct(vk_shift)){
+    if(!_shiftHeld){
+        _dismissed = false;
+        _timeAtShiftHeld = current_time;
+       _shiftHeld = true;
     }
 
-        //if player position is near the first point, finish the ward
-    if(ds_list_size(_wardPoints) >= 3){
-      if(calculateCost(getPlayerPos()) < global._souls){
-           if(checkFinishWard()){
-             return;
+    //if the shift key is held for 0.5 seconds, try and finish the ward
+    if(current_time - _timeAtShiftHeld > 800 ){
+        if(!_dismissed){
+            show_debug_message("held for 500");
+            var completed = tryFinishWard();
+            if(completed){
+                clearWard();
+                _dismissed = true;
             }
         }
     }
+}
 
+if(keyboard_check_released(vk_shift)){
 
-    var _cost = calculateCost(getPlayerPos());
-    //if the global souls count is greater than the calculateCost();
-    if(global._souls >= _cost){
-        show_debug_message("ward point added");
-        //if the ward is not finished, add a point to the ward
-        setPoint(getPlayerPos());
-        global._souls -=  _cost;
+    if(_finished){
+        clearWard();
     }
+    var _canTap = !(_shiftHeld && current_time - _timeAtShiftHeld > 200);
+    if(_canTap){
+        var _cost = calculateCost(getPlayerPos());
+        //if the global souls count is greater than the calculateCost();
+        if(global._souls >= _cost){
+            //if the ward is not finished, add a point to the ward
+            setPoint(getPlayerPos());
+            global._souls -=  _cost;
+        }
+    }
+
+	_shiftHeld = false;
+    _dismissed = true;
+
+
 }
 
 

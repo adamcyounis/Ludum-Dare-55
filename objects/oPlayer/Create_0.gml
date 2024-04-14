@@ -17,7 +17,6 @@ global._player = self;
 
 _e = new Entity(self, 0.6);
 
-
 //summoning variable
 _summoning = noone;
 _releasedSummon = true;
@@ -27,6 +26,8 @@ _soulsPerMilli = 0.01;
 //invulnerability variables
 _lastHurtTime = 0;
 _invulnDuration = 3000;
+
+
 
 function handleKeyInput(){
 	
@@ -61,9 +62,12 @@ function tryDash(){
 		if(keyboard_check_pressed(vk_space)){
 			_dash_time = current_time;
 			_dash_direction = normalize(_e._vel);
+			//play dash sound at random pitch
+			audio_sound_pitch(Dash, 1 + random_range(-0.1, 0.1));
+			audio_play_sound(Dash, 1, false);
 		}
 		
-		if(_dash_time > 0){
+		if(current_time - _dash_time< 1000){
 			var _ac_struct = animcurve_get_channel(_my_curve,"_dk");
 			var _t =( current_time-_dash_time) / 1000;
 			var _amount = animcurve_channel_evaluate( _ac_struct,_t/_dash_duration)*_dash_speed;
@@ -91,11 +95,12 @@ function tryFire(){
 	if(_pressingMouse && _hasSoul && !_onCooldown){
 		_time_at_fire = current_time;
 		global._souls --;
-
+	
 		var _soul = instance_create_layer(x, y, "Instances", oSoul);
 		var _dir = get_direction( vec(x,y),vec(mouse_x, mouse_y));
 		_soul._e._vel = mult(_dir, _soulSpeed);
 		_soul.sprite_index = sSoulPlayer;
+		audio_play_sound(Fire_1, 0, false);
 	}
 }
 
@@ -147,4 +152,43 @@ function bump(_bumperPos){
 	var _dir = get_direction(_bumperPos, vec(x,y));
 	var _bumpSpeed = 300;
 	_e._vel = add(_e._vel, mult(_dir, _bumpSpeed));	
+}
+
+
+
+//store a list of the player's last x positions, sampled once every x frames
+positions = ds_list_create();
+sampleRate = 2;
+sampleCounter = 0;
+
+function storeGhostPosition(){
+	if(sampleCounter == 0){
+		ds_list_add(positions, vec(x,y));
+	}
+
+	if(ds_list_size(positions) > 10){
+		ds_list_delete(positions, 0);
+	}
+	sampleCounter = (sampleCounter + 1) % sampleRate;
+}
+function clearGhostPositions(){
+	ds_list_clear(positions);
+}
+
+function drawSpriteGhosting(){
+	var _alpha = 0.5 - (_dash_speed - magnitude(_e._vel))*0.005;
+	var _numPositions = ds_list_size(positions);
+	for(var i = _numPositions-1; i > 0; i--){
+		var _pos = positions[| i];
+		draw_sprite_ext(sprite_index, image_index, _pos.x, _pos.y, image_xscale, image_yscale, image_angle, c_white, _alpha);
+		_alpha -= 0.1;
+	}
+}
+
+//if the player is invulnerable, flash the sprite
+function flashSprite(){
+	var _timeSinceHurt = current_time - _lastHurtTime;
+	if(_timeSinceHurt < _invulnDuration){
+        image_alpha = _timeSinceHurt mod 100 > 40 ? 1:0;
+	}
 }

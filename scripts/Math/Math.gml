@@ -53,6 +53,9 @@ function add(_v, _v2){
     return {x: _v.x + _v2.x, y: _v.y + _v2.y};
 }
 
+function magnitude(_v){
+	return sqrt(_v.x * _v.x + _v.y * _v.y);
+}
 
 function get_direction(_from, _to){
 	var v = {x: _to.x - _from.x, y: _to.y - _from.y}

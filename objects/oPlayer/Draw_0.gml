@@ -16,3 +16,5 @@ draw_self();
 draw_sprite(Staff, 0, _staffPos.x, _staffPos.y);
 draw_sprite(Hand, 0, _handPos.x, _handPos.y);
 
+
+drawSpriteGhosting();

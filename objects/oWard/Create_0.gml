@@ -7,6 +7,10 @@ _lineWidth = 2;
 _finished = false;
 _finishTime = 0;
 _costPerPixel = 0.15;
+
+_shiftHoldStartTime = 0;
+_shiftHeld = false;
+_dismissed = true;
 function startWard(){
     _finished = false;
     _wardPoints = ds_list_create();
@@ -15,17 +19,32 @@ function startWard(){
 function setPoint(_point){
 	var _candle = instance_create_depth(_point.x, _point.y, 1, oCandle);
     ds_list_add(_wardPoints, _candle);
+	//play the candle sound, increasing in pitch for the size of the list
+    audio_sound_pitch(Candle, 1 + ds_list_size(_wardPoints) * 0.1);
+    audio_play_sound(Candle, 1, false);
 }
 
 function finishWard(){
 	//delete all monsters inside the ward
-    for(var i = 0; i < instance_number(oMonster); i++){
-        with (oMonster){
-            if(other.point_in_ward(vec(x,y))){
-                 die();
+    with (oMonster){
+        if(other.point_in_ward(vec(x,y))){
+                die();
+                //if that was the only monster left, give 100 points
+            if(instance_number(oMonster) == 0){
+                notifyBonus("Room Cleared!", 100);
+            }else{
+                notifyBonus("Exorcized!", 20);
             }
         }
     }
+	
+	 audio_sound_pitch(Ward, 1);
+    audio_play_sound(Ward, 1, false);
+
+	 audio_sound_pitch(Ward, 1.60);
+    audio_play_sound(Ward, 1, false);
+
+
     _finished = true;
     _finishTime = current_time;
    // clearWard();
@@ -75,16 +94,11 @@ function clearWard(){
 
 function checkFinishWard(){
     if(ds_list_size(_wardPoints) < 3){
-        return;
+        return false;
     }
 
-    var _pPos = getPlayerPos();
-    var _distanceToPlayer = point_distance(_pPos.x, _pPos.y, _wardPoints[|0].x, _wardPoints[|0].y);
-    if(_distanceToPlayer < _endRange){
-        finishWard();
-        return true;
-    }
-    return false;
+    finishWard();
+    return true;
 }
 
 function setupDebugWard(){
@@ -108,3 +122,17 @@ function calculateCost(_pos){
 }
 
 //setupDebugWard();
+
+function tryFinishWard(){
+    //if player position is near the first point, finish the ward
+    if(ds_list_size(_wardPoints) >= 3){
+      if(calculateCost(_wardPoints[|0]) < global._souls){
+         var finished = checkFinishWard();
+           if(finished){
+             return true;
+            }
+        }
+    }
+    return false;
+
+}

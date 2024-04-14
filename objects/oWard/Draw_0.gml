@@ -19,18 +19,17 @@ if(_finished){
     draw_line_width(_p1.x, _p1.y, _p2.x, _p2.y,_w);
 }
 
-//if unfinished but the player is in the range of the final point, close the loop and make the last line flashing
+//if unfinished but the player is holding shift, close the loop and make the last line flashing
 if(!_finished && ds_list_size(_wardPoints) > 0){
     var _p1 = _wardPoints[| ds_list_size(_wardPoints) - 1];
-    var _p2 = getPlayerPos();
     var _px = _wardPoints[| 0];
-    if(point_distance(_px.x, _px.y, _p2.x, _p2.y) < _endRange){
+    if(_shiftHeld && ds_list_size(_wardPoints) >= 3){
  
         //make the fill alpha flash
         var _alpha = 0.5 + 0.5 * sin(current_time * 0.01);
         draw_set_alpha(_alpha);
         //if the player has enough souls, make it green, otherwise make it red
-        draw_set_colour(global._souls >= calculateCost(_p2)? global._green: global._red);
+        draw_set_colour(global._souls >= calculateCost(_px)? global._green: global._red);
 
         //draw a line between the last and first points
         draw_line_width(_p1.x, _p1.y, _px.x, _px.y, 6);

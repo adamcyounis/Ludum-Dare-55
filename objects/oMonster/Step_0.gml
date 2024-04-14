@@ -1,6 +1,6 @@
 /// @description Insert description here
 // You can write your code in this editor
-
+var _prevLoyal = _loyal;
 scale();
 pickDirection();
 pickColour();
@@ -26,4 +26,8 @@ if(_loyal){
     if(_loyalty > _souls*10){
         _loyal = true;
     }
+}
+
+if(!_prevLoyal && _loyal){
+	audio_play_sound(Thanks, 0, false);
 }
