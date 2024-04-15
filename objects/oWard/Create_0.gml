@@ -10,7 +10,7 @@ _costPerPixel = 0.15;
 
 _shiftHoldStartTime = 0;
 _shiftHeld = false;
-_dismissed = true;
+_confirmed = true;
 function startWard(){
     _finished = false;
     _wardPoints = ds_list_create();

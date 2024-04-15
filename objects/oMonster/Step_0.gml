@@ -2,7 +2,9 @@
 // You can write your code in this editor
 var _prevLoyal = _loyal;
 scale();
-pickDirection();
+if(global._souls > 0){
+	pickDirection();
+}
 pickColour();
 
 _e.decel();

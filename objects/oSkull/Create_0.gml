@@ -5,8 +5,11 @@ _souls = 0;
 
 _timeAtDead =0;
 function drop(){
-	_souls = _monster._souls;
-	_monster = noone;
+	
+	if(_monster != noone){
+		_souls = _monster._souls;
+		_monster = noone;
+	}
 	sprite_index = sDeadSkull;
 	_timeAtDead = current_time;
 

@@ -23,7 +23,8 @@ function spawnMonster(){
 		}
 	}
 	
-	instance_create_layer(_spawnVec.x, _spawnVec.y, "Instances", oMonster);
+	var _sign = instance_create_layer(_spawnVec.x, _spawnVec.y, "Instances", oSummonSign);
+	_sign._releaseTimer = round( random_range(50,200));
 }
 	
 for(var i = 0; i < random_range(3,6); i++){

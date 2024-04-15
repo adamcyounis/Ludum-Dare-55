@@ -1,45 +1,36 @@
-/// @description Insert description here
-// You can write your code in this edito
+
 
 if(keyboard_check_direct(vk_shift)){
     if(!_shiftHeld){
-        _dismissed = false;
-        _timeAtShiftHeld = current_time;
        _shiftHeld = true;
     }
 
-    //if the shift key is held for 0.5 seconds, try and finish the ward
-    if(current_time - _timeAtShiftHeld > 800 ){
-        if(!_dismissed){
-            show_debug_message("held for 500");
-            var completed = tryFinishWard();
-            if(completed){
-                clearWard();
-                _dismissed = true;
-            }
+    if(mouse_check_button_pressed(mb_right)){
+
+        if(_finished){
+           clearWard();
+        }    
+         tryFinishWard();
+
+    }else if(mouse_check_button_pressed(mb_left)){
+        if(_finished){
+            clearWard();
         }
-    }
-}
-
-if(keyboard_check_released(vk_shift)){
-
-    if(_finished){
-        clearWard();
-    }
-    var _canTap = !(_shiftHeld && current_time - _timeAtShiftHeld > 200);
-    if(_canTap){
         var _cost = calculateCost(getPlayerPos());
         //if the global souls count is greater than the calculateCost();
         if(global._souls >= _cost){
             //if the ward is not finished, add a point to the ward
             setPoint(getPlayerPos());
             global._souls -=  _cost;
+        
         }
+   
     }
+}
 
-	_shiftHeld = false;
-    _dismissed = true;
-
+if(keyboard_check_released(vk_shift)){
+     //_confirmed = true;
+     _shiftHeld = false;
 
 }
 

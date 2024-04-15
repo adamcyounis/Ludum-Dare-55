@@ -2,7 +2,7 @@
 // You can write your code in this editor
 _speed = 15;
 _base_speed = 15;
-_max_speed = 14;
+_max_speed = 16;
 _dash_time = 0;
 _dash_direction = vec(0,0);
 _dash_speed = 120;
@@ -25,7 +25,7 @@ _soulsPerMilli = 0.01;
 
 //invulnerability variables
 _lastHurtTime = 0;
-_invulnDuration = 3000;
+_invulnDuration = 2000;
 
 
 
@@ -88,11 +88,12 @@ function clampSpeed(){
 
 
 function tryFire(){	
-	var _pressingMouse = mouse_check_button(mb_left)
+	var _pressingMouse = mouse_check_button(mb_left);
+	var _holdingShift = keyboard_check(vk_shift);
 	var _hasSoul = global._souls > 1;
 	var _onCooldown = current_time - _time_at_fire < _rof;
 	
-	if(_pressingMouse && _hasSoul && !_onCooldown){
+	if(_pressingMouse && _hasSoul && !_onCooldown && !_holdingShift){
 		_time_at_fire = current_time;
 		global._souls --;
 	
@@ -107,6 +108,11 @@ function tryFire(){
 function trySummon(){
 	var _cost = (current_time - _timeAtSummonStart) * _soulsPerMilli;
 	var holding = mouse_check_button(mb_right);
+	//if shift is held, and we aren't already summoning, return
+	if(keyboard_check(vk_shift) && _summoning == noone){
+		return;
+	}
+
 	if(_releasedSummon == false && !holding){
 		_releasedSummon = true;
 	}
@@ -129,7 +135,7 @@ function trySummon(){
 		}else{
 			//release summoning sign
 			global._souls -= _summoning._souls;
-			_summoning.release();	
+			_summoning.release(true);	
 			_summoning = noone;
 	
 		}

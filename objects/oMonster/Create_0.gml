@@ -196,10 +196,13 @@ function scale(){
 
 scale();
 
-function summon(_value){
+function summon(_value, _toBeLoyal){
 	_souls = _value;
-	_loyalty = _value * 10;
-	_loyal = true;
+
+	if(_toBeLoyal){
+		_loyalty = _value * 10;
+		_loyal = true;
+	}
 }
 
 function die(){
